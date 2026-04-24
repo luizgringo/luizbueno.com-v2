@@ -1,8 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { DOSHeader } from "../components/dos/DOSHeader";
-import { StatusBar } from "../components/dos/StatusBar";
+import { DOSHeader } from "@/components/dos/DOSHeader";
+import { StatusBar } from "@/components/dos/StatusBar";
 
 function NotFoundComponent() {
   return (
