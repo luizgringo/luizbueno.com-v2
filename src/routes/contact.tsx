@@ -39,9 +39,9 @@ function ContactPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <NCWindow title="C:\>CONTACT.COM">
-        <div className="space-y-2 text-base sm:text-lg">
+    <div className="page-stack">
+      <NCWindow title="C:\LUIZBUENO\CONTACT.COM">
+        <div className="contact-page-body">
           <Line cmd="WHOAMI" out={profile.name} />
           <Line cmd="LOCATION" out={profile.location} />
           <Line
@@ -51,14 +51,10 @@ function ContactPage() {
                 <span>
                   {profile.emailUser} [at] {profile.emailDomain}
                 </span>
-                <button
-                  type="button"
-                  onClick={onCopyEmail}
-                  className="ml-3 border border-foreground bg-background px-2 py-0.5 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                >
+                <button type="button" onClick={onCopyEmail} className="contact-copy-btn">
                   {copied ? "OK." : "[ COPY ]"}
                 </button>
-                <p className="text-foreground/70 text-sm mt-1">
+                <p className="contact-hint">
                   (address shown obfuscated to prevent spam — click COPY for the real one)
                 </p>
               </>
@@ -68,27 +64,27 @@ function ContactPage() {
           <Line
             cmd="LINKS /LIST"
             out={
-              <ul className="space-y-1">
+              <ul className="contact-links-list">
                 <li>
-                  <span className="text-foreground/70">linkedin......:</span>{" "}
+                  <span className="contact-kv">linkedin......:</span>{" "}
                   <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">
                     /in/luizhenriquebueno
                   </a>
                 </li>
                 <li>
-                  <span className="text-foreground/70">github........:</span>{" "}
+                  <span className="contact-kv">github........:</span>{" "}
                   <a href={profile.links.github} target="_blank" rel="noopener noreferrer">
                     @luizgringo
                   </a>
                 </li>
                 <li>
-                  <span className="text-foreground/70">website.......:</span>{" "}
+                  <span className="contact-kv">website.......:</span>{" "}
                   <a href={profile.links.website} target="_blank" rel="noopener noreferrer">
                     luizbueno.com
                   </a>
                 </li>
                 <li>
-                  <span className="text-foreground/70">scrum.org.....:</span>{" "}
+                  <span className="contact-kv">scrum.org.....:</span>{" "}
                   <a href={profile.links.scrum} target="_blank" rel="noopener noreferrer">
                     profile
                   </a>
@@ -96,17 +92,17 @@ function ContactPage() {
               </ul>
             }
           />
-          <p className="pt-2">
-            <span className="text-accent">C:\&gt;</span> <BlinkingCursor />
+          <p className="contact-prompt-line">
+            <span className="dos-text--accent">C:\&gt;</span> <BlinkingCursor />
           </p>
         </div>
       </NCWindow>
 
       <NCWindow title="[ HELP ]">
         <p>
-          The fastest way to reach me is through LinkedIn or GitHub. For email, please
-          use the <strong>COPY</strong> button above — the address is intentionally
-          shown as <code>contact [at] luizbueno.com</code> to keep automated bots away.
+          The fastest way to reach me is through LinkedIn or GitHub. For email, please use the{" "}
+          <strong>COPY</strong> button above — the address is intentionally shown as{" "}
+          <code>contact [at] luizbueno.com</code> to keep automated bots away.
         </p>
       </NCWindow>
     </div>
@@ -117,10 +113,10 @@ function Line({ cmd, out }: { cmd: string; out: React.ReactNode }) {
   return (
     <div>
       <p>
-        <span className="text-accent">C:\&gt;</span> {cmd}
+        <span className="dos-text--accent">C:\&gt;</span> {cmd}
       </p>
-      <div className="pl-4">
-        <span className="text-foreground/70">&gt;</span> <span>{out}</span>
+      <div className="contact-line-out">
+        <span className="dos-text--dim">&gt;</span> <span>{out}</span>
       </div>
     </div>
   );

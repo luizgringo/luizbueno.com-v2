@@ -1,5 +1,4 @@
-import { cn } from "@/lib/utils";
-
 export function BlinkingCursor({ className }: { className?: string }) {
-  return <span aria-hidden className={cn("dos-cursor", className)} />;
+  const merged = ["dos-cursor", className].filter(Boolean).join(" ");
+  return <span aria-hidden className={merged} />;
 }

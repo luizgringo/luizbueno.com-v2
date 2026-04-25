@@ -3,9 +3,8 @@ import { NCWindow } from "@/components/dos/NCWindow";
 import { NCPanel } from "@/components/dos/NCPanel";
 import { BlinkingCursor } from "@/components/dos/BlinkingCursor";
 import { Typewriter } from "@/components/dos/Typewriter";
-import { AsciiLogo } from "@/components/dos/AsciiLogo";
 import { profile } from "@/data/profile";
-import { career } from "@/data/career";
+import vintageComputerGif from "@/assets/images/vintage-computer.gif";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,82 +27,81 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const recent = career.slice(0, 6);
-
   return (
-    <div className="space-y-6">
-      <NCWindow title="C:\>WELCOME.EXE">
-        <div className="space-y-4">
-          <AsciiLogo />
-          <p className="pixel-heading text-sm sm:text-base text-accent">
-            HI! <BlinkingCursor />
-          </p>
-          <p className="text-lg sm:text-xl">
-            <Typewriter
-              text={`I'm ${profile.shortName} — ${profile.title}.`}
-              speed={18}
+    <div className="page-stack">
+      <NCWindow title="C:\LUIZBUENO\HOME">
+        <div className="home-intro-split">
+          <div className="home-legacy-hero">
+            <img
+              src={vintageComputerGif}
+              alt="Vintage computer workstation"
+              className="home-legacy-hero__image"
+              loading="eager"
             />
-          </p>
-          <p className="text-foreground/90">
-            Based in {profile.location}. {profile.yearsExperience} years developing
-            web-based applications across frontend, backend and team leadership.
-          </p>
-
-          <NCPanel className="text-sm sm:text-base">
+          </div>
+          <div className="home-intro-split__content page-stack page-stack--roomy">
+            <p className="pixel-heading home-greeting dos-text--accent">
+              <Typewriter text="HI!" speed={26} className="dos-text--accent" /> <BlinkingCursor />
+            </p>
             <p>
-              I&apos;ve been working since 2009 developing systems both in the Frontend and
-              Backend, with a focus on web-based applications. I like to create good
-              experiences so people feel the applications I built are useful, effective
-              and friendly.
+              <Typewriter
+                text={`I'm ${profile.shortName} — Full Stack Developer.`}
+                speed={18}
+                className="dos-text dos-text--typewriter"
+                startDelay={420}
+              />
             </p>
-            <p className="mt-3">
-              Bachelor in Information Systems and postgraduate in Web Development &amp;
-              UX Design / Agility — all from PUC-Minas. Also a Professional Scrum Master
-              (PSM I) and IFTL Tech Lead Program graduate.
+            <p>
+              <Typewriter
+                text={`Based in ${profile.location}. Since 2009, I have been building frontend and backend systems for web products, combining technical quality, business impact and excellent user experience.`}
+                speed={10}
+                startDelay={1450}
+                className="dos-text--muted"
+              />
             </p>
-          </NCPanel>
 
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Link to="/portfolio" className="nc-nav-item border border-border bg-primary text-primary-foreground">
-              [F2] BROWSE PORTFOLIO
-            </Link>
-            <Link to="/contact" className="nc-nav-item border border-border bg-primary text-primary-foreground">
-              [F4] SEND MESSAGE
-            </Link>
-            <Link to="/about" className="nc-nav-item border border-border bg-primary text-primary-foreground">
-              [F1] ABOUT
-            </Link>
+            <NCPanel className="nc-panel--body-text home-vintage-reveal home-vintage-reveal--panel">
+              <p>
+                <Typewriter
+                  text="I have led and delivered products across iGaming, streaming and SaaS contexts, with hands-on work in Vue/Nuxt, React/TypeScript, Node.js and modern frontend architecture. My recent experience includes building large-scale experiences and supporting multi-platform frontend ecosystems."
+                  speed={9}
+                  startDelay={3400}
+                />
+              </p>
+              <p className="home-bio-gap">
+                <Typewriter
+                  text="Alongside delivery, I drive technical direction, mentoring and cross-team alignment as Tech Lead and Scrum Master. I hold a Bachelor's degree in Information Systems, postgraduate specialization in Web Development and UX/Agility at PUC Minas, plus PSM and Tech Lead certifications."
+                  speed={9}
+                  startDelay={6300}
+                />
+              </p>
+            </NCPanel>
+
+            <NCWindow
+              title="C:\LUIZBUENO\NAV.TXT"
+              className="nc-window--full-width home-vintage-reveal home-vintage-reveal--hint"
+              bodyClassName="page-stack page-stack--roomy"
+            >
+              <p className="nc-panel--body-text dos-text--muted">
+                You can also navigate with keyboard keys 1, 2, 3 and 4.
+              </p>
+              <div className="page-row page-row--actions">
+                <Link to="/" className="nc-action-link">
+                  1 - Home
+                </Link>
+                <Link to="/portfolio" className="nc-action-link">
+                  2 - Portfolio
+                </Link>
+                <Link to="/about" className="nc-action-link">
+                  3 - About Me
+                </Link>
+                <Link to="/contact" className="nc-action-link">
+                  4 - Contacts
+                </Link>
+              </div>
+            </NCWindow>
           </div>
         </div>
-      </NCWindow>
-
-      <NCWindow title="C:\>TYPE CAREER.LOG">
-        <ul className="divide-y divide-foreground/30">
-          {recent.map((entry) => (
-            <li
-              key={`${entry.company}-${entry.period}`}
-              className="grid grid-cols-1 gap-1 py-2 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-4"
-            >
-              <div>
-                <span className="text-accent">{">"}</span>{" "}
-                <span className="text-foreground">{entry.role}</span>{" "}
-                <span className="text-foreground/70">@</span>{" "}
-                <span className="text-foreground">{entry.company}</span>
-                {entry.current && (
-                  <span className="ml-2 bg-destructive text-destructive-foreground px-1 text-xs">
-                    NOW
-                  </span>
-                )}
-              </div>
-              <div className="text-foreground/80 sm:text-right">{entry.period}</div>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 text-foreground/80">
-          <Link to="/about" className="text-accent">
-            {">"} Show full career log...
-          </Link>
-        </p>
       </NCWindow>
     </div>
   );

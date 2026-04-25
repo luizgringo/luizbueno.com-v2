@@ -1,23 +1,23 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { DOSHeader } from "@/components/dos/DOSHeader";
+import { NCCommandLine } from "@/components/dos/NCCommandLine";
 import { StatusBar } from "@/components/dos/StatusBar";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <DOSHeader />
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-10">
-        <section className="nc-window w-full">
+    <div className="not-found-root scanlines">
+      <NCCommandLine />
+      <main className="not-found-root__main">
+        <section className="nc-window nc-window--full-width">
           <header className="nc-window-title">═[ ABORT, RETRY, FAIL? ]═</header>
-          <div className="nc-window-body text-center">
-            <p className="pixel-heading text-2xl text-destructive">ERROR 404</p>
-            <p className="mt-4">Bad command or file name.</p>
-            <p className="mt-1 text-foreground/80">
+          <div className="nc-window-body nc-window-body--centered">
+            <p className="pixel-heading not-found-error-title dos-text--destructive">ERROR 404</p>
+            <p className="not-found-lead">Bad command or file name.</p>
+            <p className="not-found-sub">
               The page you requested could not be located on this drive.
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <div className="not-found-actions">
               <Link to="/" className="nc-nav-item">
                 <span aria-hidden>{">"}</span> RETURN TO C:\
               </Link>
@@ -91,11 +91,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground scanlines">
-      <DOSHeader />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-3 sm:px-6 py-6 pb-24">
-        <Outlet />
+    <div className="app-root scanlines">
+      <NCCommandLine />
+      <main className="app-root__main">
+        <div key={pathname} className="route-vintage-reveal">
+          <Outlet />
+        </div>
       </main>
       <StatusBar />
     </div>

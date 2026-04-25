@@ -1,5 +1,4 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
 
 interface NCWindowProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -7,21 +6,17 @@ interface NCWindowProps extends React.HTMLAttributes<HTMLElement> {
   bodyClassName?: string;
 }
 
-export function NCWindow({
-  title,
-  children,
-  className,
-  bodyClassName,
-  ...rest
-}: NCWindowProps) {
+export function NCWindow({ title, children, className, bodyClassName, ...rest }: NCWindowProps) {
+  const rootClass = ["nc-window", className].filter(Boolean).join(" ");
+  const bodyClass = ["nc-window-body", bodyClassName].filter(Boolean).join(" ");
   return (
-    <section className={cn("nc-window", className)} {...rest}>
-      <header className="nc-window-title text-base sm:text-lg">
+    <section className={rootClass} {...rest}>
+      <header className="nc-window-title">
         <span aria-hidden>═[ </span>
         <span>{title}</span>
         <span aria-hidden> ]═</span>
       </header>
-      <div className={cn("nc-window-body", bodyClassName)}>{children}</div>
+      <div className={bodyClass}>{children}</div>
     </section>
   );
 }

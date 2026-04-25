@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { FKey } from "./FKey";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { MAIN_NAV_ITEMS } from "./main-nav";
 
 function formatTime(d: Date): string {
   const h = String(d.getHours()).padStart(2, "0");
@@ -9,9 +10,18 @@ function formatTime(d: Date): string {
   return `${h}:${m}:${s}`;
 }
 
+function isTypingContext(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (target.isContentEditable) return true;
+  return false;
+}
+
 export function StatusBar() {
   const navigate = useNavigate();
   const [time, setTime] = useState<string>(() => formatTime(new Date()));
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => setTime(formatTime(new Date())), 1000);
@@ -20,10 +30,20 @@ export function StatusBar() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.target instanceof HTMLElement) {
-        const tag = e.target.tagName;
-        if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (isTypingContext(e.target)) return;
+
+      if (e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4") {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        if (e.repeat) return;
+        const n = Number(e.key) - 1;
+        const item = MAIN_NAV_ITEMS[n];
+        if (item) {
+          e.preventDefault();
+          navigate({ to: item.to });
+        }
+        return;
       }
+
       switch (e.key) {
         case "F1":
           e.preventDefault();
@@ -41,31 +61,78 @@ export function StatusBar() {
           e.preventDefault();
           navigate({ to: "/contact" });
           break;
-        case "F10":
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          break;
         default:
           break;
       }
     }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
   }, [navigate]);
 
+  const focusNavLink = useCallback((index: number) => {
+    const root = navRef.current;
+    if (!root) return;
+    const links = root.querySelectorAll<HTMLAnchorElement>("a[href]");
+    const i = ((index % links.length) + links.length) % links.length;
+    links[i]?.focus();
+  }, []);
+
+  const onNavKeyDown = useCallback(
+    (e: ReactKeyboardEvent<HTMLElement>) => {
+      const root = navRef.current;
+      if (!root || !(e.target instanceof HTMLAnchorElement) || !root.contains(e.target)) {
+        return;
+      }
+      const links = [...root.querySelectorAll<HTMLAnchorElement>("a[href]")];
+      const idx = links.indexOf(e.target);
+      if (idx < 0) return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        focusNavLink(idx + 1);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        focusNavLink(idx - 1);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        focusNavLink(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        focusNavLink(links.length - 1);
+      }
+    },
+    [focusNavLink],
+  );
+
   return (
-    <footer className="sticky bottom-0 z-40 w-full bg-primary text-primary-foreground border-t-2 border-foreground">
-      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-2 gap-y-1 px-3 py-1 text-base">
-        <FKey num={1} label="Help" onClick={() => navigate({ to: "/about" })} />
-        <FKey num={2} label="View" onClick={() => navigate({ to: "/portfolio" })} />
-        <FKey num={3} label="Home" onClick={() => navigate({ to: "/" })} />
-        <FKey num={4} label="Mail" onClick={() => navigate({ to: "/contact" })} />
-        <FKey
-          num={10}
-          label="Top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        />
-        <div className="ml-auto flex items-center gap-3 text-primary-foreground">
+    <footer className="status-bar">
+      <div className="status-bar__inner">
+        <nav
+          ref={navRef}
+          className="status-bar__nav"
+          aria-label="Navegação principal"
+          onKeyDown={onNavKeyDown}
+        >
+          {MAIN_NAV_ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              className="status-bar__link"
+              activeProps={{ className: "status-bar__link--active" }}
+              aria-label={`${item.label}, tecla ${item.digitKey} ou ${item.fnKeyLabel}`}
+              title={`Tecla ${item.digitKey} ou ${item.fnKeyLabel}`}
+            >
+              <span className="status-bar__fkey">
+                <span className="status-bar__fkey-num" aria-hidden>
+                  {item.digitKey}
+                </span>
+                <span className="status-bar__fkey-label">{item.footerShortLabel}</span>
+              </span>
+            </Link>
+          ))}
+        </nav>
+        <div className="status-bar__meta">
           <span aria-hidden>640K OK</span>
           <span aria-label={`Current time ${time}`}>{time}</span>
         </div>

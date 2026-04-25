@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { NCWindow } from "@/components/dos/NCWindow";
 import { NCPanel } from "@/components/dos/NCPanel";
 import { profile } from "@/data/profile";
 import { career } from "@/data/career";
 import { skillGroups, industryKnowledge } from "@/data/skills";
+import { projects } from "@/data/projects";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,45 +26,74 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
+const COMPANY_ALIASES: Record<string, string[]> = {
+  "Globoplay @ Globo": ["globoplay", "globo"],
+  "Capgemini Brasil": ["capgemini"],
+  "Kyte Tecnologia": ["kyte"],
+  "Localiza Rent A Car": ["localiza", "zarp"],
+  "Lett Insights": ["lett"],
+  "Squadra Tecnologia": ["squadra", "empresa 1", "backoffice"],
+  SLIIC: ["sliic", "seqtra"],
+  "Cactus Gaming": ["cactus", "bet7k", "7k"],
+  "ETUS Media Holding": ["etus", "brius", "luther"],
+  "Arbeit Software": ["arbeit", "cosmik", "agent"],
+  Hotmart: ["hotmart"],
+};
+
+function getRelatedProjects(company: string) {
+  const normalizedCompany = company.toLowerCase();
+  const aliases = COMPANY_ALIASES[company] ?? [normalizedCompany];
+  const unique = new Map<string, (typeof projects)[number]>();
+
+  projects.forEach((project) => {
+    const haystack = `${project.company} ${project.name}`.toLowerCase();
+    if (aliases.some((alias) => haystack.includes(alias.toLowerCase()))) {
+      unique.set(project.id, project);
+    }
+  });
+
+  return [...unique.values()];
+}
+
 function AboutPage() {
   return (
-    <div className="space-y-6">
-      <NCWindow title="C:\>TYPE ABOUT.TXT">
-        <h1 className="pixel-heading text-base sm:text-lg text-accent">{profile.name}</h1>
-        <p className="mt-1 text-foreground/90">
+    <div className="page-stack">
+      <NCWindow title="C:\LUIZBUENO\ABOUT.TXT">
+        <h1 className="pixel-heading about-title dos-text--accent">{profile.name}</h1>
+        <p className="about-subline">
           {profile.title} · {profile.location}
         </p>
-        <div className="mt-4 space-y-3">
+        <div className="about-bio-stack">
           {profile.bio.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
         </div>
       </NCWindow>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="about-two-col">
         <NCWindow title="[ EDUCATION ]">
-          <ul className="space-y-3">
+          <ul className="about-list">
             {profile.education.map((e) => (
               <li key={e.degree}>
-                <p className="text-accent">{e.year}</p>
+                <p className="dos-text--accent">{e.year}</p>
                 <p>{e.degree}</p>
-                <p className="text-foreground/80">{e.school}</p>
+                <p className="dos-text--soft">{e.school}</p>
               </li>
             ))}
           </ul>
         </NCWindow>
 
         <NCWindow title="[ CERTIFICATIONS ]">
-          <ul className="space-y-3">
+          <ul className="about-list">
             {profile.certifications.map((c) => (
               <li key={c.name}>
-                <p className="text-accent">{c.year}</p>
+                <p className="dos-text--accent">{c.year}</p>
                 <p>
                   <a href={c.url} target="_blank" rel="noopener noreferrer">
                     {c.name}
                   </a>
                 </p>
-                <p className="text-foreground/80">{c.issuer}</p>
+                <p className="dos-text--soft">{c.issuer}</p>
               </li>
             ))}
           </ul>
@@ -71,26 +101,26 @@ function AboutPage() {
       </div>
 
       <NCWindow title="[ LANGUAGES ]">
-        <ul className="space-y-2">
+        <ul className="about-list about-list--tight">
           {profile.languages.map((lang) => (
-            <li key={lang.name} className="flex flex-wrap items-center gap-3">
-              <span className="min-w-[8rem]">{lang.name}</span>
-              <span aria-hidden className="font-mono">
+            <li key={lang.name} className="about-lang-row">
+              <span className="about-lang-name">{lang.name}</span>
+              <span aria-hidden className="about-lang-meter">
                 [{"█".repeat(lang.bars)}
                 {"░".repeat(5 - lang.bars)}]
               </span>
-              <span className="text-foreground/80">{lang.level}</span>
+              <span className="dos-text--soft">{lang.level}</span>
             </li>
           ))}
         </ul>
       </NCWindow>
 
       <NCWindow title="[ TOOLS & TECHNOLOGIES ]">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="about-skill-grid">
           {skillGroups.map((group) => (
             <NCPanel key={group.title}>
-              <p className="pixel-heading text-xs">{group.title}</p>
-              <ul className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-2 text-sm">
+              <p className="pixel-heading about-skill-panel-title">{group.title}</p>
+              <ul className="about-skill-items">
                 {group.items.map((item) => (
                   <li key={item}>
                     <span aria-hidden>[X]</span> {item}
@@ -103,30 +133,50 @@ function AboutPage() {
       </NCWindow>
 
       <NCWindow title="[ INDUSTRY KNOWLEDGE ]">
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
+        <ul className="about-industry-list">
           {industryKnowledge.map((k) => (
             <li key={k}>
-              <span aria-hidden className="text-accent">▶</span> {k}
+              <span aria-hidden className="dos-text--accent">
+                ▶
+              </span>{" "}
+              {k}
             </li>
           ))}
         </ul>
       </NCWindow>
 
       <NCWindow title="[ CAREER LOG — FULL ]">
-        <ol className="space-y-2">
-          {career.map((e) => (
-            <li
-              key={`${e.company}-${e.period}`}
-              className="grid grid-cols-1 gap-1 border-b border-foreground/30 pb-2 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline sm:gap-4"
-            >
-              <span className="text-accent">{e.period}</span>
-              <span>
-                <span>{e.role}</span> <span className="text-foreground/70">@</span>{" "}
-                <span>{e.company}</span>
-              </span>
-              <span className="text-foreground/70 sm:text-right">{e.location}</span>
-            </li>
-          ))}
+        <ol className="about-career-list">
+          {career.map((e) => {
+            const relatedProjects = getRelatedProjects(e.company);
+            return (
+              <li key={`${e.company}-${e.period}`} className="about-career-item">
+                <span className="dos-text--accent">{e.period}</span>
+                <span>
+                  <span>{e.role}</span> <span className="dos-text--dim">@</span>{" "}
+                  <span>{e.company}</span>
+                </span>
+                <span className="about-career-item__location">{e.location}</span>
+                {relatedProjects.length > 0 && (
+                  <div className="about-career-projects">
+                    <span className="dos-text--soft">Related portfolio projects:</span>
+                    <div className="about-career-projects__links">
+                      {relatedProjects.map((project) => (
+                        <Link
+                          key={project.id}
+                          to="/portfolio"
+                          search={{ project: project.id }}
+                          className="about-career-project-link"
+                        >
+                          [{project.name}]
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ol>
       </NCWindow>
     </div>

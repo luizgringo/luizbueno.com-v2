@@ -1,13 +1,13 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
 
 interface NCPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
 export function NCPanel({ className, children, ...rest }: NCPanelProps) {
+  const merged = ["nc-panel", className].filter(Boolean).join(" ");
   return (
-    <div className={cn("nc-panel", className)} {...rest}>
+    <div className={merged} {...rest}>
       {children}
     </div>
   );
