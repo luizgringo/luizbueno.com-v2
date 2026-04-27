@@ -16,6 +16,8 @@ import {
   registerPathnameForHomeIntro,
   shouldAnimateHomeIntro,
 } from "@/lib/homeIntroSession";
+import { pageSeoMeta, rootStructuredDataJsonLd, seoDefaults } from "@/lib/seo";
+import { profile } from "@/data/profile";
 
 function NotFoundComponent() {
   return (
@@ -48,23 +50,34 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Luiz Bueno — Senior Frontend Developer & Tech Lead" },
+      { name: "author", content: profile.name },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#0000AA" },
+      ...pageSeoMeta(seoDefaults.home),
+    ],
+    scripts: [
       {
-        name: "description",
-        content:
-          "Senior Frontend Developer & Tech Lead based in Belo Horizonte, Brazil. 17+ years building web applications. A pixel-art / Norton Commander 386 portfolio.",
+        type: "application/ld+json",
+        children: JSON.stringify(rootStructuredDataJsonLd()),
       },
-      { name: "author", content: "Luiz Henrique Bueno" },
-      { property: "og:title", content: "Luiz Bueno — Senior Frontend Developer & Tech Lead" },
-      {
-        property: "og:description",
-        content:
-          "Senior Frontend Developer & Tech Lead. 17+ years building web applications. A pixel-art / Norton Commander 386 portfolio.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
     ],
     links: [
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+        sizes: "32x32",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-32.png",
+        sizes: "32x32",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/apple-touch-icon.png",
+        sizes: "180x180",
+      },
       {
         rel: "stylesheet",
         href: appCss,

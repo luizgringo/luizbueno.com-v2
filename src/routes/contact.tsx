@@ -4,22 +4,12 @@ import * as React from "react";
 import { NCWindow } from "@/components/dos/NCWindow";
 import { BlinkingCursor } from "@/components/dos/BlinkingCursor";
 import { profile } from "@/data/profile";
+import { pageSeoLinks, pageSeoMeta, seoDefaults } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
-    meta: [
-      { title: "Contact — Luiz Bueno" },
-      {
-        name: "description",
-        content:
-          "Get in touch with Luiz Bueno via LinkedIn, GitHub or email — Belo Horizonte, Brazil.",
-      },
-      { property: "og:title", content: "Contact — Luiz Bueno" },
-      {
-        property: "og:description",
-        content: "Get in touch with Luiz Bueno via LinkedIn, GitHub or email.",
-      },
-    ],
+    meta: pageSeoMeta(seoDefaults.contact),
+    links: pageSeoLinks(seoDefaults.contact.path),
   }),
   component: ContactPage,
 });

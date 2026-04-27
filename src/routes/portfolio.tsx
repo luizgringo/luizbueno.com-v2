@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { NCWindow } from "@/components/dos/NCWindow";
+import { profile } from "@/data/profile";
 import { projects, categoryLabels, type ProjectCategory } from "@/data/projects";
+import { pageSeoLinks, pageSeoMeta, seoDefaults } from "@/lib/seo";
 
 type Filter = ProjectCategory | "all";
 const PAGE_SIZE = 9;
@@ -51,22 +53,29 @@ export const Route = createFileRoute("/portfolio")({
   validateSearch: (raw: Record<string, unknown>): PortfolioSearch => ({
     project: typeof raw.project === "string" && raw.project.length > 0 ? raw.project : undefined,
   }),
-  head: () => ({
-    meta: [
-      { title: "Portfolio — Luiz Bueno" },
-      {
-        name: "description",
-        content:
-          "Selected projects by Luiz Bueno across iGaming, streaming (Globoplay), e-commerce (Hotmart, Kyte), tech leadership and enterprise systems.",
-      },
-      { property: "og:title", content: "Portfolio — Luiz Bueno" },
-      {
-        property: "og:description",
-        content:
-          "Selected projects across iGaming, streaming, e-commerce, tech leadership and enterprise systems.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const search = match.search;
+    const selected =
+      search.project !== undefined ? projects.find((p) => p.id === search.project) : undefined;
+
+    if (selected) {
+      const title = `${selected.name} — ${selected.company} | ${profile.shortName}`;
+      const path = `/portfolio?project=${encodeURIComponent(selected.id)}`;
+      return {
+        meta: pageSeoMeta({
+          title,
+          description: selected.summary,
+          path,
+        }),
+        links: pageSeoLinks(path),
+      };
+    }
+
+    return {
+      meta: pageSeoMeta(seoDefaults.portfolio),
+      links: pageSeoLinks(seoDefaults.portfolio.path),
+    };
+  },
   component: PortfolioPage,
 });
 

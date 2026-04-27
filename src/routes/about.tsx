@@ -5,23 +5,12 @@ import { profile } from "@/data/profile";
 import { career } from "@/data/career";
 import { skillGroups, industryKnowledge } from "@/data/skills";
 import { projects } from "@/data/projects";
+import { pageSeoLinks, pageSeoMeta, seoDefaults } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
-    meta: [
-      { title: "About — Luiz Bueno" },
-      {
-        name: "description",
-        content:
-          "About Luiz Bueno — Senior Frontend Developer and Tech Lead with 17+ years of experience, education at PUC-Minas and PSM I + IFTL Tech Lead certifications.",
-      },
-      { property: "og:title", content: "About — Luiz Bueno" },
-      {
-        property: "og:description",
-        content:
-          "About Luiz Bueno — Senior Frontend Developer and Tech Lead with 17+ years of experience.",
-      },
-    ],
+    meta: pageSeoMeta(seoDefaults.about),
+    links: pageSeoLinks(seoDefaults.about.path),
   }),
   component: AboutPage,
 });

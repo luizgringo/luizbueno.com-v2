@@ -7,23 +7,11 @@ import { Typewriter } from "@/components/dos/Typewriter";
 import { profile } from "@/data/profile";
 import vintageComputerGif from "@/assets/images/vintage-computer.gif";
 import { markHomeIntroSeenInSession, shouldAnimateHomeIntro } from "@/lib/homeIntroSession";
+import { pageSeoLinks } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Luiz Bueno — Senior Frontend Developer & Tech Lead" },
-      {
-        name: "description",
-        content:
-          "Senior Frontend Developer & Tech Lead based in Belo Horizonte. 17+ years building web applications, currently at Cactus Gaming.",
-      },
-      { property: "og:title", content: "Luiz Bueno — Senior Frontend Developer & Tech Lead" },
-      {
-        property: "og:description",
-        content:
-          "Senior Frontend Developer & Tech Lead based in Belo Horizonte. 17+ years building web applications, currently at Cactus Gaming.",
-      },
-    ],
+    links: pageSeoLinks("/"),
   }),
   component: Index,
 });
