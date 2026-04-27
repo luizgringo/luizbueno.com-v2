@@ -1,8 +1,21 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState } from "@tanstack/react-router";
+import { useEffect } from "react";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useRouterState,
+} from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 import { NCCommandLine } from "@/components/dos/NCCommandLine";
 import { StatusBar } from "@/components/dos/StatusBar";
+import {
+  isHomePathname,
+  registerPathnameForHomeIntro,
+  shouldAnimateHomeIntro,
+} from "@/lib/homeIntroSession";
 
 function NotFoundComponent() {
   return (
@@ -92,12 +105,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const outletRouteReveal = !isHomePathname(pathname) || shouldAnimateHomeIntro();
+
+  useEffect(() => {
+    registerPathnameForHomeIntro(pathname);
+  }, [pathname]);
 
   return (
     <div className="app-root scanlines">
       <NCCommandLine />
       <main className="app-root__main">
-        <div key={pathname} className="route-vintage-reveal">
+        <div key={pathname} className={outletRouteReveal ? "route-vintage-reveal" : undefined}>
           <Outlet />
         </div>
       </main>

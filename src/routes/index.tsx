@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { NCWindow } from "@/components/dos/NCWindow";
 import { NCPanel } from "@/components/dos/NCPanel";
@@ -5,6 +6,7 @@ import { BlinkingCursor } from "@/components/dos/BlinkingCursor";
 import { Typewriter } from "@/components/dos/Typewriter";
 import { profile } from "@/data/profile";
 import vintageComputerGif from "@/assets/images/vintage-computer.gif";
+import { markHomeIntroSeenInSession, shouldAnimateHomeIntro } from "@/lib/homeIntroSession";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,11 +28,39 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const HOME_INTRO_MARK_MS = 10_500;
+
 function Index() {
+  const [playIntro, setPlayIntro] = useState(() => shouldAnimateHomeIntro());
+
+  useLayoutEffect(() => {
+    setPlayIntro(shouldAnimateHomeIntro());
+  }, []);
+
+  useEffect(() => {
+    if (!playIntro) return;
+    const onUnload = () => {
+      markHomeIntroSeenInSession();
+    };
+    window.addEventListener("beforeunload", onUnload);
+    const id = window.setTimeout(() => {
+      markHomeIntroSeenInSession();
+    }, HOME_INTRO_MARK_MS);
+    return () => {
+      window.removeEventListener("beforeunload", onUnload);
+      window.clearTimeout(id);
+    };
+  }, [playIntro]);
+
+  const instant = !playIntro;
+  const introSplitClass = ["home-intro-split", playIntro ? "" : "home-intro--static"]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className="page-stack">
       <NCWindow title="C:\LUIZBUENO\HOME">
-        <div className="home-intro-split">
+        <div className={introSplitClass}>
           <div className="home-legacy-hero">
             <img
               src={vintageComputerGif}
@@ -41,7 +71,8 @@ function Index() {
           </div>
           <div className="home-intro-split__content page-stack page-stack--roomy">
             <p className="pixel-heading home-greeting dos-text--accent">
-              <Typewriter text="HI!" speed={26} className="dos-text--accent" /> <BlinkingCursor />
+              <Typewriter text="HI!" speed={26} className="dos-text--accent" instant={instant} />{" "}
+              <BlinkingCursor />
             </p>
             <p>
               <Typewriter
@@ -49,6 +80,7 @@ function Index() {
                 speed={18}
                 className="dos-text dos-text--typewriter"
                 startDelay={420}
+                instant={instant}
               />
             </p>
             <p>
@@ -57,6 +89,7 @@ function Index() {
                 speed={10}
                 startDelay={1450}
                 className="dos-text--muted"
+                instant={instant}
               />
             </p>
 
@@ -66,6 +99,7 @@ function Index() {
                   text="I have led and delivered products across iGaming, streaming and SaaS contexts, with hands-on work in Vue/Nuxt, React/TypeScript, Node.js and modern frontend architecture. My recent experience includes building large-scale experiences and supporting multi-platform frontend ecosystems."
                   speed={9}
                   startDelay={3400}
+                  instant={instant}
                 />
               </p>
               <p className="home-bio-gap">
@@ -73,6 +107,7 @@ function Index() {
                   text="Alongside delivery, I drive technical direction, mentoring and cross-team alignment as Tech Lead and Scrum Master. I hold a Bachelor's degree in Information Systems, postgraduate specialization in Web Development and UX/Agility at PUC Minas, plus PSM and Tech Lead certifications."
                   speed={9}
                   startDelay={6300}
+                  instant={instant}
                 />
               </p>
             </NCPanel>

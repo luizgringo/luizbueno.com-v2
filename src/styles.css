@@ -619,6 +619,13 @@
     animation-delay: 3300ms;
   }
 
+  .home-intro--static .home-vintage-reveal {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
+  }
+
   @keyframes home-vintage-reveal {
     0% {
       opacity: 0;

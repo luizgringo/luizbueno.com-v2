@@ -5,14 +5,25 @@ interface TypewriterProps {
   speed?: number;
   className?: string;
   startDelay?: number;
+  instant?: boolean;
 }
 
-export function Typewriter({ text, speed = 25, className, startDelay = 0 }: TypewriterProps) {
-  const [displayed, setDisplayed] = useState("");
+export function Typewriter({
+  text,
+  speed = 25,
+  className,
+  startDelay = 0,
+  instant = false,
+}: TypewriterProps) {
+  const [displayed, setDisplayed] = useState(() => (instant ? text : ""));
   const intervalRef = useRef<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (instant) {
+      setDisplayed(text);
+      return;
+    }
     setDisplayed("");
     let i = 0;
     timeoutRef.current = window.setTimeout(() => {
@@ -30,7 +41,7 @@ export function Typewriter({ text, speed = 25, className, startDelay = 0 }: Type
       if (intervalRef.current) window.clearInterval(intervalRef.current);
       if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
     };
-  }, [text, speed, startDelay]);
+  }, [text, speed, startDelay, instant]);
 
   return <span className={className}>{displayed}</span>;
 }
