@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { MAIN_NAV_ITEMS } from "./main-nav";
+import { MAIN_NAV_ITEMS } from "@/data/main-nav";
 
 function formatTime(d: Date): string {
   const h = String(d.getHours()).padStart(2, "0");

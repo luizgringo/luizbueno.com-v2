@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Link } from "@tanstack/react-router";
-import { MAIN_NAV_ITEMS } from "./main-nav";
+import { MAIN_NAV_ITEMS } from "@/data/main-nav";
 
 function BarHotkey({ label, index }: { label: string; index: number }) {
   const before = label.slice(0, index);
