@@ -1,7 +1,7 @@
 /**
  * Session storage key used to track home intro consumption.
  */
-const STORAGE_KEY = "pixel-portfolio-home-intro";
+const STORAGE_KEY = "luizbueno-home-intro";
 
 let lastPathnameForHomeIntro: string | null = null;
 let homeIntroConsumedInMemory = false;

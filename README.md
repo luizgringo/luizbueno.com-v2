@@ -1,4 +1,4 @@
-# Pixel Portfolio 386
+# luizbueno.com v2
 
 A personal portfolio with a DOS / Norton Commander visual identity, built with **Next.js 16, React 19, TypeScript, Biome, and Tailwind CSS v4**.
 
