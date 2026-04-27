@@ -12,11 +12,10 @@ The codebase is organized to prioritize:
 ## Tech Stack
 
 - Next.js 16 (App Router, Turbopack)
-- React 19 (Server Components, Server Actions, `useActionState` / `useFormStatus`)
+- React 19 (Server Components)
 - TypeScript (strict)
 - Tailwind CSS v4
 - Biome (lint + formatting + import organization)
-- Zod (server-side input validation)
 - Playwright (E2E)
 - Classic Console Neue — self-hosted DOS console font (`next/font/local`)
 
@@ -50,11 +49,7 @@ src/
       components/about-screen.tsx
       lib/get-related-projects.ts
     contact/
-      actions/contact-form-state.ts
-      actions/send-contact-message.ts
-      components/contact-message-form.tsx
       components/contact-screen.client.tsx
-      components/contact-submit-button.tsx
     home/
       components/home-screen.client.tsx
     portfolio/
@@ -82,7 +77,6 @@ src/
 
 tests/
   e2e/
-    contact-form.spec.ts
     shell-shortcuts.spec.ts
 
 playwright.config.ts
@@ -134,7 +128,7 @@ Features may depend on `shared/` and `content/`, but never on each other.
 | `home`      | DOS-style intro, typewriter animation, session-based replay control       |
 | `about`     | Profile bio, skills, languages, career timeline                           |
 | `portfolio` | Filterable project list, paging, detail pane, keyboard navigation         |
-| `contact`   | Contact info + Server Action form with `useActionState` / `useFormStatus` |
+| `contact`   | Contact info, links, and copy-to-clipboard email helper                   |
 | `shell`     | Persistent app shell (menu bar, command line, status bar, F-key shortcuts) |
 
 ### `src/shared/` — shared layer
@@ -177,7 +171,6 @@ The shell layer (`src/features/shell`) stays mounted across navigations:
 
 - Routes are Server Components by default.
 - `*.client.tsx` files mark the boundary where interactivity is required.
-- The contact form uses a Server Action with progressive UX feedback (`useActionState` + `useFormStatus`).
 
 ### 4. Dynamic SEO for `/portfolio`
 
@@ -185,7 +178,7 @@ The shell layer (`src/features/shell`) stays mounted across navigations:
 
 ## Component Documentation
 
-All exported components, helpers, Server Actions and content models are documented with TSDoc:
+All exported components, helpers and content models are documented with TSDoc:
 
 - intent and architectural responsibility
 - parameter and return descriptions for exported functions
@@ -194,7 +187,7 @@ All exported components, helpers, Server Actions and content models are document
 Examples:
 
 - `src/features/shell/components/shell-frame.client.tsx`
-- `src/features/contact/components/contact-message-form.tsx`
+- `src/features/contact/components/contact-screen.client.tsx`
 - `src/shared/seo/metadata.ts`
 - `src/shared/ui/dos/nc-window.tsx`
 
@@ -233,7 +226,6 @@ E2E tests live in `tests/e2e` and run against a real Next.js dev server (auto-st
 ### Covered scenarios
 
 - **Shell keyboard navigation**: function keys (`F1..F4`) and number keys (`1..4`)
-- **Contact form flow**: validation errors and successful submission via Server Action
 
 ## Scripts
 
@@ -272,6 +264,5 @@ The following commands all pass on the current state of the repository:
 
 ## Suggested Next Steps
 
-1. Wire the contact Server Action to a real delivery provider (Resend, SES, etc.).
-2. Add unit tests for helper logic (`project-period`, prompt builder, intro session logic).
-3. Add observability/analytics boundaries to measure navigation and contact conversion.
+1. Add unit tests for helper logic (`project-period`, prompt builder, intro session logic).
+2. Add observability/analytics boundaries to measure navigation.

@@ -696,6 +696,108 @@
     gap: 0.5rem;
   }
 
+  .about-education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-education-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #fff;
+  }
+
+  .about-education-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .about-education-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .about-education-period {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .about-education-degree {
+    font-weight: 600;
+  }
+
+  .about-education-school {
+    font-size: 0.9rem;
+  }
+
+  .about-education-diploma-link {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-foreground);
+    font-size: 0.8rem;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .about-education-diploma-link:hover,
+  .about-education-diploma-link:focus-visible {
+    color: var(--color-accent-foreground);
+    background-color: var(--color-accent);
+  }
+
+  .about-education-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .about-education-section-title {
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .about-education-activities {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  @media (min-width: 640px) {
+    .about-education-activities {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-education-activities {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .about-education-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .about-education-dissertation {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
   .about-lang-row {
     display: flex;
     flex-wrap: wrap;
@@ -870,6 +972,28 @@
     margin-top: 0.75rem;
   }
 
+  .about-resume-row {
+    margin-top: 1rem;
+  }
+
+  .about-resume-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-foreground);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 1em;
+  }
+
+  .about-resume-button:hover {
+    color: var(--color-accent-foreground);
+    background-color: var(--color-accent);
+  }
+
   .contact-page-body {
     display: flex;
     flex-direction: column;
@@ -924,91 +1048,6 @@
 
   .contact-prompt-line {
     padding-top: 0.5rem;
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .contact-form__intro {
-    margin-bottom: 0.25rem;
-    color: color-mix(in oklch, var(--color-foreground) 85%, transparent);
-  }
-
-  .contact-form__field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .contact-form__field > span {
-    color: var(--color-accent);
-    font-size: 0.95rem;
-  }
-
-  .contact-form__field > small {
-    color: var(--color-destructive);
-    font-size: 0.85rem;
-  }
-
-  .contact-form__field > input,
-  .contact-form__field > textarea {
-    width: 100%;
-    border: 1px solid var(--color-foreground);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font: inherit;
-    padding: 0.35rem 0.45rem;
-    line-height: 1.35;
-  }
-
-  .contact-form__field > textarea {
-    resize: vertical;
-    min-height: 6.25rem;
-  }
-
-  .contact-form__field > input:focus-visible,
-  .contact-form__field > textarea:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 1px;
-  }
-
-  .contact-form__footer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .contact-form__submit {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-foreground);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    padding: 0.3rem 0.7rem;
-    font: inherit;
-    width: fit-content;
-  }
-
-  .contact-form__submit:hover:not(:disabled) {
-    color: var(--color-accent-foreground);
-    background-color: var(--color-accent);
-  }
-
-  .contact-form__submit:disabled {
-    opacity: 0.7;
-  }
-
-  .contact-form__feedback--success {
-    color: color-mix(in oklch, var(--color-accent) 80%, var(--color-foreground) 20%);
-  }
-
-  .contact-form__feedback--error {
-    color: var(--color-destructive);
   }
 
   .portfolio-intro {

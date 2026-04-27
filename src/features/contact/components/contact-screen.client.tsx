@@ -1,7 +1,6 @@
 "use client";
 
 import { profile } from "@/content/profile";
-import { ContactMessageForm } from "@/features/contact/components/contact-message-form";
 import { BlinkingCursor } from "@/shared/ui/dos/blinking-cursor";
 import { NCWindow } from "@/shared/ui/dos/nc-window";
 import { useState } from "react";
@@ -110,6 +109,12 @@ export function ContactScreen() {
                     profile
                   </a>
                 </li>
+                <li>
+                  <span className="contact-kv">resume........:</span>{" "}
+                  <a href={profile.links.resume} target="_blank" rel="noopener noreferrer" download>
+                    [ DOWNLOAD .PDF ]
+                  </a>
+                </li>
               </ul>
             }
           />
@@ -117,10 +122,6 @@ export function ContactScreen() {
             <span className="dos-text--accent">C:\&gt;</span> <BlinkingCursor />
           </p>
         </div>
-      </NCWindow>
-
-      <NCWindow title="[ QUICK MESSAGE ]">
-        <ContactMessageForm />
       </NCWindow>
 
       <NCWindow title="[ HELP ]">

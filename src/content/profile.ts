@@ -6,6 +6,7 @@ export type ProfileLinks = {
   linkedin: string;
   github: string;
   scrum: string;
+  resume: string;
 };
 
 /**
@@ -23,7 +24,13 @@ export type ProfileLanguage = {
 export type ProfileEducation = {
   degree: string;
   school: string;
+  campus?: string;
+  period: string;
   year: string;
+  activities?: string[];
+  description?: string[];
+  dissertation?: string;
+  diploma?: string;
 };
 
 /**
@@ -79,6 +86,7 @@ export const profile: Profile = {
     linkedin: "https://www.linkedin.com/in/luizhenriquebueno/",
     github: "https://github.com/luizgringo",
     scrum: "https://www.scrum.org/user/293231",
+    resume: "/luizbueno-resume.pdf",
   },
   bio: [
     "I began my professional journey in I.T. in 2007, and since 2009 I have specialized in developing both frontend and backend systems for web-based applications. Over the years I've built a strong foundation in designing and delivering robust, user-focused solutions.",
@@ -93,19 +101,51 @@ export const profile: Profile = {
   ],
   education: [
     {
-      degree: "Postgraduate — Specialization in UX Design and Agility",
+      degree: "Postgraduate — UX Design & Agile Frameworks",
       school: "PUC Minas",
+      period: "2021 – 2022",
       year: "2022",
+      activities: [
+        "Agile UX Practices",
+        "Information Architecture and Usability",
+        "Innovation and Research",
+        "Agile Discovery & Design",
+        "Agile Frameworks",
+        "Agile Principles and Mindset",
+      ],
+      diploma: "/images/education/postgraduate-ux-design-agility.jpg",
     },
     {
-      degree: "Postgraduate — Specialization in Web Application Development",
+      degree: "Postgraduate — Web Applications Development",
       school: "PUC Minas",
+      period: "2013 – 2014",
       year: "2014",
+      activities: [
+        "Web Application Architecture",
+        "Development of Web Standards-Based Pages",
+        "Web Application Modeling",
+        "Web Framework I (Java)",
+        "Web Application Project",
+        "Web Framework II (ASP.NET MVC)",
+        "Web Framework III (PHP and Ruby on Rails)",
+        "Scientific Methodology",
+        "Web Servers and Security",
+      ],
+      diploma: "/images/education/postgraduate-web-applications.jpg",
     },
     {
       degree: "Bachelor's Degree in Information Systems",
       school: "PUC Minas",
+      campus: "Contagem campus",
+      period: "2007 – 2012",
       year: "2012",
+      description: [
+        "Emphasis on algorithms, data structures, databases, computer networks and software engineering.",
+        "Development of prototypes and full-stack Web applications across all stages: requirements modeling, UX design, Java coding and usability testing.",
+      ],
+      dissertation:
+        "Computer accessibility resources for motor-impaired people: efficiency analysis of virtual keyboards using Headmouse (2011). Advisor: Eliane Cristina de Freitas Rocha.",
+      diploma: "/images/education/bachelor-information-systems.jpg",
     },
   ],
   certifications: [
@@ -113,7 +153,7 @@ export const profile: Profile = {
       name: "Tech Lead Program",
       issuer: "IFTL",
       year: "2024",
-      url: "https://bit.ly/luizbueno-iftl-techlead",
+      url: "https://www.luizbueno.com/images/certifications/iftl-techlead.png",
     },
     {
       name: "EF SET Certificate — C2 Proficient",

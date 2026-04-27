@@ -24,21 +24,84 @@ export function AboutScreen() {
             <p key={`${index}-${paragraph.slice(0, 20)}`}>{paragraph}</p>
           ))}
         </div>
+        <div className="about-resume-row">
+          <a
+            href={profile.links.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+            className="about-resume-button"
+          >
+            [ DOWNLOAD RESUME .PDF ]
+          </a>
+        </div>
+      </NCWindow>
+
+      <NCWindow title="[ EDUCATION ]">
+        <ol className="about-education-list">
+          {profile.education.map((education) => (
+            <li key={education.degree} className="about-education-item">
+              <header className="about-education-header">
+                <p className="dos-text--accent about-education-period">[ {education.period} ]</p>
+                <p className="about-education-degree">{education.degree}</p>
+                <p className="dos-text--soft about-education-school">
+                  {education.school}
+                  {education.campus ? ` · ${education.campus}` : ""}
+                </p>
+                {education.diploma ? (
+                  <a
+                    href={education.diploma}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="about-education-diploma-link"
+                    aria-label={`View diploma — ${education.degree}`}
+                  >
+                    [ VIEW DIPLOMA .JPG ]
+                  </a>
+                ) : null}
+              </header>
+
+              {education.activities ? (
+                <div className="about-education-section">
+                  <p className="pixel-heading about-education-section-title">Activities</p>
+                  <ul className="about-education-activities">
+                    {education.activities.map((activity) => (
+                      <li key={activity}>
+                        <span aria-hidden>[X]</span> {activity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {education.description ? (
+                <div className="about-education-section">
+                  <p className="pixel-heading about-education-section-title">Overview</p>
+                  <ul className="about-education-bullets">
+                    {education.description.map((paragraph) => (
+                      <li key={paragraph}>
+                        <span aria-hidden className="dos-text--accent">
+                          ▶
+                        </span>{" "}
+                        {paragraph}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {education.dissertation ? (
+                <div className="about-education-section">
+                  <p className="pixel-heading about-education-section-title">Dissertation</p>
+                  <p className="about-education-dissertation">{education.dissertation}</p>
+                </div>
+              ) : null}
+            </li>
+          ))}
+        </ol>
       </NCWindow>
 
       <div className="about-two-col">
-        <NCWindow title="[ EDUCATION ]">
-          <ul className="about-list">
-            {profile.education.map((education) => (
-              <li key={education.degree}>
-                <p className="dos-text--accent">{education.year}</p>
-                <p>{education.degree}</p>
-                <p className="dos-text--soft">{education.school}</p>
-              </li>
-            ))}
-          </ul>
-        </NCWindow>
-
         <NCWindow title="[ CERTIFICATIONS ]">
           <ul className="about-list">
             {profile.certifications.map((certification) => (
@@ -54,22 +117,22 @@ export function AboutScreen() {
             ))}
           </ul>
         </NCWindow>
-      </div>
 
-      <NCWindow title="[ LANGUAGES ]">
-        <ul className="about-list about-list--tight">
-          {profile.languages.map((language) => (
-            <li key={language.name} className="about-lang-row">
-              <span className="about-lang-name">{language.name}</span>
-              <span aria-hidden className="about-lang-meter">
-                [{"█".repeat(language.bars)}
-                {"░".repeat(5 - language.bars)}]
-              </span>
-              <span className="dos-text--soft">{language.level}</span>
-            </li>
-          ))}
-        </ul>
-      </NCWindow>
+        <NCWindow title="[ LANGUAGES ]">
+          <ul className="about-list about-list--tight">
+            {profile.languages.map((language) => (
+              <li key={language.name} className="about-lang-row">
+                <span className="about-lang-name">{language.name}</span>
+                <span aria-hidden className="about-lang-meter">
+                  [{"█".repeat(language.bars)}
+                  {"░".repeat(5 - language.bars)}]
+                </span>
+                <span className="dos-text--soft">{language.level}</span>
+              </li>
+            ))}
+          </ul>
+        </NCWindow>
+      </div>
 
       <NCWindow title="[ TOOLS & TECHNOLOGIES ]">
         <div className="about-skill-grid">
