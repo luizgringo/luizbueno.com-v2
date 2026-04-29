@@ -1,10 +1,10 @@
 import { ShellFrame } from "@/features/shell/components/shell-frame.client";
 import { rootMetadata, rootStructuredDataJsonLd } from "@/shared/seo/metadata";
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import type { ReactNode } from "react";
+import { TelemetrySlot } from "./telemetry-slot.client";
 import "./globals.css";
 
 const UMAMI_SCRIPT_SRC = "https://cloud.umami.is/script.js";
@@ -62,13 +62,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ShellFrame>{children}</ShellFrame>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-        <Script
-          defer
-          src={UMAMI_SCRIPT_SRC}
-          data-website-id={UMAMI_WEBSITE_ID}
-          strategy="afterInteractive"
-        />
-        <Analytics />
+        <Script src={UMAMI_SCRIPT_SRC} data-website-id={UMAMI_WEBSITE_ID} strategy="lazyOnload" />
+        <TelemetrySlot />
       </body>
     </html>
   );
