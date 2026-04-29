@@ -4,6 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "ANALYZE=true next build --webpack",
+    "analyze:open": "ANALYZE=true ANALYZE_OPEN=true next build --webpack",
     "start": "next start",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@next/bundle-analyzer": "^16.2.4",
     "@playwright/test": "^1.50.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "^22.16.5",
