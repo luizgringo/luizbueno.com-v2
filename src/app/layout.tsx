@@ -1,5 +1,6 @@
 import { ShellFrame } from "@/features/shell/components/shell-frame.client";
 import { rootMetadata, rootStructuredDataJsonLd } from "@/shared/seo/metadata";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           data-website-id={UMAMI_WEBSITE_ID}
           strategy="afterInteractive"
         />
+        <Analytics />
       </body>
     </html>
   );
