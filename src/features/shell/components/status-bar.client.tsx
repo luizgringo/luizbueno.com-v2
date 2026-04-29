@@ -156,6 +156,7 @@ export function StatusBar() {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={false}
                 className={cn("status-bar__link", isActive && "status-bar__link--active")}
                 aria-label={`${item.digitKey} ${item.footerShortLabel}, ${item.fnKeyLabel}`}
                 title={`Key ${item.digitKey} or ${item.fnKeyLabel}`}

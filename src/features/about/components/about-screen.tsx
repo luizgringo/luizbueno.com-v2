@@ -186,6 +186,7 @@ export function AboutScreen() {
                           key={project.id}
                           href={`/portfolio?project=${encodeURIComponent(project.id)}`}
                           className="about-career-project-link"
+                          prefetch={false}
                         >
                           [{project.name}]
                         </Link>

@@ -17,7 +17,7 @@ export default function NotFound() {
             The page you requested could not be located on this drive.
           </p>
           <div className="not-found-actions">
-            <Link href="/" className="nc-nav-item">
+            <Link href="/" className="nc-nav-item" prefetch={false}>
               <span aria-hidden>{">"}</span> RETURN TO C:\
             </Link>
           </div>

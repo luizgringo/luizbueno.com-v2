@@ -63,16 +63,16 @@ export function HomeScreen() {
                 You can also navigate with keyboard keys 1, 2, 3 and 4.
               </p>
               <div className="page-row page-row--actions">
-                <Link href="/" className="nc-action-link">
+                <Link href="/" className="nc-action-link" prefetch={false}>
                   1 - Home
                 </Link>
-                <Link href="/portfolio" className="nc-action-link">
+                <Link href="/portfolio" className="nc-action-link" prefetch={false}>
                   2 - Portfolio
                 </Link>
-                <Link href="/about" className="nc-action-link">
+                <Link href="/about" className="nc-action-link" prefetch={false}>
                   3 - About Me
                 </Link>
-                <Link href="/contact" className="nc-action-link">
+                <Link href="/contact" className="nc-action-link" prefetch={false}>
                   4 - Contacts
                 </Link>
               </div>
