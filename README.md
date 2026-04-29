@@ -51,7 +51,7 @@ src/
     contact/
       components/contact-screen.client.tsx
     home/
-      components/home-screen.client.tsx
+      components/home-screen.tsx
     portfolio/
       components/portfolio-screen.client.tsx
       lib/project-period.ts

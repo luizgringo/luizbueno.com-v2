@@ -1,4 +1,4 @@
-import { HomeScreen } from "@/features/home/components/home-screen.client";
+import { HomeScreen } from "@/features/home/components/home-screen";
 import { buildPageMetadata, seoDefaults } from "@/shared/seo/metadata";
 import type { Metadata } from "next";
 

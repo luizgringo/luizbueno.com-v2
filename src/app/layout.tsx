@@ -24,11 +24,6 @@ const fontClacon = localFont({
       weight: "400",
       style: "normal",
     },
-    {
-      path: "../../public/fonts/clacon2.ttf",
-      weight: "400",
-      style: "normal",
-    },
   ],
   variable: "--font-clacon",
   display: "swap",

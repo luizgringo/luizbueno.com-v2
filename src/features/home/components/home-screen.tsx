@@ -1,5 +1,3 @@
-"use client";
-
 import { profile } from "@/content/profile";
 import { BlinkingCursor } from "@/shared/ui/dos/blinking-cursor";
 import { NCPanel } from "@/shared/ui/dos/nc-panel";
