@@ -1634,7 +1634,7 @@
 
 @keyframes dos-blink {
   to {
-    visibility: hidden;
+    opacity: 0;
   }
 }
 

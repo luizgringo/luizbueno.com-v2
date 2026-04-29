@@ -157,7 +157,7 @@ export function StatusBar() {
                 key={item.href}
                 href={item.href}
                 className={cn("status-bar__link", isActive && "status-bar__link--active")}
-                aria-label={`${item.label}, key ${item.digitKey} or ${item.fnKeyLabel}`}
+                aria-label={`${item.digitKey} ${item.footerShortLabel}, ${item.fnKeyLabel}`}
                 title={`Key ${item.digitKey} or ${item.fnKeyLabel}`}
               >
                 <span className="status-bar__fkey">
