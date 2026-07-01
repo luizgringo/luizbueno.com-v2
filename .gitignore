@@ -39,3 +39,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Local tooling (resume generator, font subset, etc.)
+scripts/
+public/resumes/
