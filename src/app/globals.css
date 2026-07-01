@@ -1116,6 +1116,47 @@
     .portfolio-mobile-nav {
       display: none;
     }
+
+    /*
+     * The grid row stretches both windows to the taller one (the detail
+     * panel). Turn the list window into a column flex box so its footer
+     * stays glued to the bottom of that stretched height instead of
+     * leaving a gap below it.
+     */
+    .portfolio-list-window {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .portfolio-list-window .nc-window-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .portfolio-project-list {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portfolio-project-list > li {
+      flex: 1 1 0;
+      min-height: 3.25rem;
+      display: flex;
+    }
+
+    .portfolio-project-list .portfolio-project-row {
+      flex: 1;
+    }
+
+    .portfolio-list-footer {
+      flex-shrink: 0;
+    }
   }
 
   @media (max-width: 767px) {
@@ -1167,7 +1208,10 @@
   }
 
   .portfolio-project-row {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
     width: 100%;
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
@@ -1179,6 +1223,39 @@
     background: transparent;
     border: none;
     border-bottom: 1px solid color-mix(in oklch, var(--color-foreground) 30%, transparent);
+  }
+
+  .portfolio-project-row__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .portfolio-project-row__cursor {
+    flex: 0 0 0.65rem;
+    text-align: center;
+  }
+
+  .portfolio-project-row__name {
+    flex: 1;
+    min-width: 0;
+    text-transform: uppercase;
+  }
+
+  .portfolio-project-row__meta {
+    display: block;
+    padding-left: calc(0.65rem + 0.35rem);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: color-mix(in oklch, var(--color-foreground) 70%, transparent);
+  }
+
+  @media (min-width: 640px) {
+    .portfolio-project-row__meta {
+      font-size: 0.875rem;
+    }
   }
 
   .portfolio-project-row:hover {
@@ -1196,20 +1273,10 @@
     background-color: var(--color-primary);
   }
 
-  .portfolio-project-row__name {
-    text-transform: uppercase;
-  }
-
-  .portfolio-project-row__meta {
-    font-size: 0.75rem;
-    line-height: 1.35;
-    color: color-mix(in oklch, var(--color-foreground) 70%, transparent);
-  }
-
-  @media (min-width: 640px) {
-    .portfolio-project-row__meta {
-      font-size: 0.875rem;
-    }
+  .portfolio-project-row--placeholder {
+    pointer-events: none;
+    opacity: 0.22;
+    cursor: default;
   }
 
   .portfolio-project-row--active .portfolio-project-row__meta {

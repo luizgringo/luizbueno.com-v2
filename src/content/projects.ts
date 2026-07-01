@@ -39,6 +39,33 @@ export interface Project {
  */
 export const projects: Project[] = [
   {
+    id: "cactus-design-system-v2",
+    name: "Cactus Design System v2.0.0",
+    company: "Cactus Gaming",
+    period: "Jun 2026 — Present",
+    category: "frontend",
+    stack: [
+      "React",
+      "TypeScript",
+      "Vanilla Extract",
+      "Radix UI",
+      "Style Dictionary",
+      "Vitest",
+      "Storybook",
+      "GitHub Actions",
+    ],
+    summary:
+      "Led a full re-architecture of a production React component library (340 files, +26.9k lines) into a zero-runtime, accessibility-first Design System.",
+    highlights: [
+      "Migrated inline/JS-driven styles to zero-runtime CSS (Vanilla Extract), moving hover/focus logic from React state into native browser CSS across 31 components",
+      "Built a single source of truth for design tokens (DTCG + Style Dictionary), auto-generating CSS variables and TS types — no more hardcoded hex codes",
+      "Adopted Radix UI primitives for accessible, keyboard-navigable overlays (Modal, Dropdown, Tabs) with full ARIA support",
+      "Standardized forwardRef + asChild for ref forwarding and polymorphic composition",
+      "Reached ~97% test coverage (300+ tests, Vitest + RTL) with enforced CI thresholds",
+      "Automated SemVer releases and changelog generation via CI + Gemini",
+    ],
+  },
+  {
     id: "cactus-partners-dashboard",
     name: "Cactus Partners Dashboard",
     company: "Cactus Gaming",

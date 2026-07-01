@@ -300,7 +300,26 @@ export function PortfolioScreen({ initialProjectId }: PortfolioScreenProps) {
           bodyClassName="nc-window-body--flush"
         >
           <ul className="portfolio-project-list">
-            {pagedProjects.map((project) => {
+            {Array.from({ length: PAGE_SIZE }, (_, index) => {
+              const project = pagedProjects[index];
+              const slotIndex = pageStart + index;
+
+              if (!project) {
+                return (
+                  <li key={`portfolio-empty-${slotIndex}`} aria-hidden>
+                    <div className="portfolio-project-row portfolio-project-row--placeholder">
+                      <span className="portfolio-project-row__head">
+                        <span aria-hidden className="portfolio-project-row__cursor">
+                          {" "}
+                        </span>
+                        <span className="portfolio-project-row__name">&nbsp;</span>
+                      </span>
+                      <span className="portfolio-project-row__meta">&nbsp;</span>
+                    </div>
+                  </li>
+                );
+              }
+
               const active = selected ? project.id === selected.id : false;
 
               return (
@@ -315,11 +334,15 @@ export function PortfolioScreen({ initialProjectId }: PortfolioScreenProps) {
                       .filter(Boolean)
                       .join(" ")}
                   >
-                    <span aria-hidden>{active ? ">" : " "}</span>{" "}
-                    <span className="portfolio-project-row__name">{project.name}</span>
-                    <div className="portfolio-project-row__meta">
+                    <span className="portfolio-project-row__head">
+                      <span aria-hidden className="portfolio-project-row__cursor">
+                        {active ? ">" : " "}
+                      </span>
+                      <span className="portfolio-project-row__name">{project.name}</span>
+                    </span>
+                    <span className="portfolio-project-row__meta">
                       {project.company} · {project.period}
-                    </div>
+                    </span>
                   </button>
                 </li>
               );
