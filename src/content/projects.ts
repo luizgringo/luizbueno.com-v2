@@ -61,7 +61,7 @@ export const projects: Project[] = [
       "Built a single source of truth for design tokens (DTCG + Style Dictionary), auto-generating CSS variables and TS types — no more hardcoded hex codes",
       "Adopted Radix UI primitives for accessible, keyboard-navigable overlays (Modal, Dropdown, Tabs) with full ARIA support",
       "Standardized forwardRef + asChild for ref forwarding and polymorphic composition",
-      "Reached ~97% test coverage (300+ tests, Vitest + RTL) with enforced CI thresholds",
+      "Reached approximately 97% test coverage (300+ tests, Vitest + RTL) with enforced CI thresholds",
       "Automated SemVer releases and changelog generation via CI + Gemini",
     ],
   },
