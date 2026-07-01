@@ -15,6 +15,25 @@ export interface CareerEntry {
 }
 
 /**
+ * Official website URLs keyed by company name shown in the career log.
+ */
+export const companyUrls: Record<string, string> = {
+  "Cactus Gaming": "https://cactusgaming.net/",
+  "ETUS Media Holding": "https://etus.com.br/",
+  "Globoplay @ Globo": "https://globoplay.globo.com/",
+  "Globo Comunicação": "https://globoplay.globo.com/",
+  "Kyte Tecnologia": "https://www.kyte.com.br/",
+  "Localiza Rent A Car": "https://www.localiza.com/",
+  "Arbeit Software": "https://arbeitsoftware.com/",
+  Hotmart: "https://hotmart.com/",
+  "Lett Insights": "https://lett.digital/",
+  "Squadra Tecnologia": "https://www.squadra.com.br/",
+  "Capgemini Brasil": "https://www.capgemini.com/",
+  Capgemini: "https://www.capgemini.com/",
+  SLIIC: "https://sliic.com.br/",
+};
+
+/**
  * Full career timeline ordered from newest to oldest.
  */
 export const career: CareerEntry[] = [

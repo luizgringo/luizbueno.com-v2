@@ -1,4 +1,4 @@
-import { career } from "@/content/career";
+import { career, companyUrls } from "@/content/career";
 import { profile } from "@/content/profile";
 import { industryKnowledge, skillGroups } from "@/content/skills";
 import { getRelatedProjects } from "@/features/about/lib/get-related-projects";
@@ -168,13 +168,25 @@ export function AboutScreen() {
         <ol className="about-career-list">
           {career.map((entry) => {
             const relatedProjects = getRelatedProjects(entry.company);
+            const companyUrl = companyUrls[entry.company];
 
             return (
               <li key={`${entry.company}-${entry.period}`} className="about-career-item">
                 <span className="dos-text--accent">{entry.period}</span>
                 <span>
                   <span>{entry.role}</span> <span className="dos-text--dim">@</span>{" "}
-                  <span>{entry.company}</span>
+                  {companyUrl ? (
+                    <a
+                      href={companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="company-link"
+                    >
+                      {entry.company}
+                    </a>
+                  ) : (
+                    <span>{entry.company}</span>
+                  )}
                 </span>
                 <span className="about-career-item__location">{entry.location}</span>
                 {relatedProjects.length > 0 ? (

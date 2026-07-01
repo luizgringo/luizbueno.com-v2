@@ -1,5 +1,6 @@
 "use client";
 
+import { companyUrls } from "@/content/career";
 import { type ProjectCategory, categoryLabels, projects } from "@/content/projects";
 import { toPeriodRank } from "@/features/portfolio/lib/project-period";
 import { isTypingContext } from "@/shared/lib/dom";
@@ -403,7 +404,19 @@ export function PortfolioScreen({ initialProjectId }: PortfolioScreenProps) {
               <div className="portfolio-detail__head">
                 <p className="portfolio-detail__title">{selected.name}</p>
                 <p>
-                  <span className="dos-text--dim">Company...:</span> {selected.company}
+                  <span className="dos-text--dim">Company...:</span>{" "}
+                  {companyUrls[selected.company] ? (
+                    <a
+                      href={companyUrls[selected.company]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="company-link"
+                    >
+                      {selected.company}
+                    </a>
+                  ) : (
+                    selected.company
+                  )}
                 </p>
                 <p>
                   <span className="dos-text--dim">Period....:</span> {selected.period}

@@ -893,6 +893,18 @@
     color: color-mix(in oklch, var(--color-foreground) 70%, transparent);
   }
 
+  .company-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .company-link:hover {
+    color: var(--color-accent-foreground);
+    background-color: var(--color-accent);
+    text-decoration: underline;
+  }
+
   @media (min-width: 640px) {
     .about-career-item__location {
       text-align: right;
